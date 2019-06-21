@@ -1,0 +1,31 @@
+{
+	"name": "node-cache-9",
+	"version": "1.0.0",
+	"description": "a simple cache module",
+	"license": "MIT",
+	"repository": "985ch/node-cache-9",
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "node test"
+	},
+	"files": [
+		"lib",
+		"index.js"
+	],
+	"keywords": [
+		"cache",
+		"lazy"
+	],
+	"homepage": "https://github.com/985ch/node-cache-9#readme",
+	"author": "985ch",
+	"dependencies": {
+		"lodash": "^4.17.11",
+		"redis": "^2.8.0"
+	},
+	"devDependencies": {
+		"eslint": "^5.16.0",
+		"eslint-config-egg": "^7.4.1"
+	}
+}
