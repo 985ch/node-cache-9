@@ -23,7 +23,7 @@ const config = {
   },
 };
 
-const cache = init(config, console.log);
+const cache = init(config);
 
 async function singleTest(i, store, x, opt) {
   const data = await cache[store].get('test', async () => {

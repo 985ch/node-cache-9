@@ -1,6 +1,6 @@
 {
 	"name": "node-cache-9",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "a simple cache module",
 	"license": "MIT",
 	"repository": "985ch/node-cache-9",

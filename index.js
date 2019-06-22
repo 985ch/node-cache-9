@@ -7,7 +7,7 @@ const redis = require('./lib/redis');
 
 const drivers = { memory, redis };
 
-function init(config, errLog) {
+function init(config, errLog = console.log) {
   const cache = {};
 
   for (const key in config) {
