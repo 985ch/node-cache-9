@@ -1,6 +1,6 @@
 {
 	"name": "node-cache-9",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "a simple cache module",
 	"license": "MIT",
 	"repository": "985ch/node-cache-9",
@@ -16,6 +16,7 @@
 	],
 	"keywords": [
 		"cache",
+		"caching",
 		"lazy"
 	],
 	"homepage": "https://github.com/985ch/node-cache-9#readme",

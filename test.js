@@ -32,6 +32,15 @@ async function singleTest(i, store, x, opt) {
   }, opt);
   console.log(`${i}:${data}`);
 }
+async function multiplyTest(i, store, list, opt) {
+  const data = await cache[store].getM('test', list, obj => obj, async lst => {
+    console.log('from raw:' + lst.join(','));
+    const result = [];
+    for (const k of lst)result.push(k);
+    return result;
+  }, opt);
+  console.log(`${i}:${data.list.join(',')}`);
+}
 
 const wait = promisify((n, callback) => {
   setTimeout(() => {
@@ -40,9 +49,9 @@ const wait = promisify((n, callback) => {
 });
 
 async function runTest(store) {
-  console.log(`start ${store} test`);
+  console.log(`start ${store} single est`);
   await singleTest(1, store, '1st');
-  await singleTest(2, store, '2nd', { update: true });
+  await singleTest(2, store, '2nd with update', { update: true });
   cache[store].renew('test');
   console.log('renew!');
   await singleTest(3, store, '3rd');
@@ -51,12 +60,29 @@ async function runTest(store) {
   await singleTest(4, store, '4th');
   await wait(1000);
   await singleTest(5, store, '5th');
-  console.log(`complete ${store} test`);
+  console.log(`complete ${store} single test\n`);
+}
+
+async function runTestM(store) {
+  console.log(`start ${store} multiply test`);
+  await multiplyTest(1, store, [ 1, 3, 5 ]);
+  await multiplyTest(2, store, [ 1, 2 ], { update: true });
+  cache[store].renewM('test', [ 1, 2, 3, 5 ]);
+  console.log('renew 1,2,3,5!');
+  await multiplyTest(3, store, [ 1, 2, 3, 4, 5 ]);
+  cache[store].clearM('test', [ 3, 4, 5 ]);
+  console.log('clear 3,4,5!');
+  await multiplyTest(4, store, [ 1, 2, 3, 4 ]);
+  await wait(1000);
+  await multiplyTest(5, store, [ 1, 2, 3, 4, 5 ]);
+  console.log(`complete ${store} multiply test\n`);
 }
 
 (async () => {
   await runTest('memory');
   await runTest('redis');
+  await runTestM('memory');
+  await runTestM('redis');
   cache.memory.destroy();
   cache.redis.destroy();
 })();

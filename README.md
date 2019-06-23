@@ -5,9 +5,6 @@
   <a  href="https://npmjs.org/package/node-cache-9">
     <img src="https://img.shields.io/npm/v/node-cache-9.svg?style=flat-square" />
   </a>
-  <a  href="https://npmjs.org/package/node-cache-9">
-    <img alt="NPM version" src="https://https://img.shields.io/npm/dm/node-cache-9.svg?style=flat-square" target="_blank"/>
-  </a>
   <a href="https://github.com/985ch/node-cache-9/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -15,7 +12,7 @@
 > a lazy load cache module
 
 ### [中文说明](./README.zh_CN.md)
-###  [Homepage](https://github.com/985ch/node-cache-9#readme)
+### [Homepage](https://github.com/985ch/node-cache-9#readme)
 
 ## Prerequisites
 
@@ -41,59 +38,85 @@ const options = { ttl: 10 * 60 };
 const cache = cache9.init(config);
 
 (async function() {
-// get data from raw or cache
-  const data = await cache.xxx.get('cachekey', async () => { /* get your data and return it here */ }, options);
+  // get data from raw or cache
+  const data = await cache.xxx.get('cachekey', async () => {
+    // get your data and return it here
+    return 'something';
+  }, options);
   // renew the cached data
   cache.xxx.renew('cachekey', options);
   // clear the cache
   cache.xxx.clear('cachekey');
+  // get multiply datas from raw or cache
+  const datas = await cache.xxx.getM('mainKey', [ 'objA', 'objB', 'objC' ], obj => obj.key, async lst => {
+    // get your data and return as array here
+    return [];
+  });
+  // renew the cached data
+  cache.xxx.renewM('mainKey', [ 'objA', 'objB' ], options);
+  // clear the cached data
+  cache.xxx.clearM('mainKey', [ 'objC' ]);
+  cache.xxx.clearM('mainKey');
 
   console.log(data);
+  console.log(datas.list);
 })();
 ```
 ## Driver
-a cache driver mean a class with functions **get(key, func, options),renew(key, options),clear(key)**
+a cache driver need some functions
+### Need functions
+| function | return | description |
+|:----|:-----|:----|
+| get(key,func,options) | any | get a data from cache or run func() to get data |
+| renew(key,options) | null | renew cache TTL |
+| clear(key) | null | delete cache |
+| getM(key,list,saveKey,func,options) | array | get multiply data from cache or run func(lst) to get a array |
+| renewM(key,list,options) | null | renew multiply cache TTL |
+| clearM(key, list, options) | null | delete multiply cache data |
 ### Default dirvers
 * **memory**: a memory cache you can save everything into it
 * **redis**: a redis cache you can save something can stringify
 ### BaseDriver
-you can get BaseDriver from package with is a driver base of memory and redis, you can get it like this
+you can use BaseDriver from your custom driver
 ```js
 const BaseDriver = require('node-cache-9').BaseDriver;
+class yourDriver extends BaseDriver {}
+const config = {
+  xxx:{
+    class: yourDriver
+  }
+}
 ```
 ## Config
 a config with one or more store
 ### Store config
-    |name|description|required|
-    |:---|:---------|:------:|
-    |class|the cache driver,it can be a default driver name or a driver class|true|
-    |ttl|time to live(second), 0 = ∞|false|
-### memory driver extends config
-    | name | description | required |
-    | :--- | :--------- | :------：|
-    | channel | the redis publish/subscribe channel,need getRedis or rds | false |
-    | getRedis   | function(){ return {pub, sub}},pub and sub is redis client | false |
-    | rds | a redis client config, use it when you don't set getRedis | false|
-### redis driver extend config
-    | name | description | required |
-    | :--- | :--------- | :------：|
-    | raw | when it is true we don't use JSON.stringify and JSON.parse for raw data | false |
-    | getRedis   | function(){ return rds},rds is redis client | false |
-    | rds | a redis client config, use it when you don't set getRedis | false|
+| name | driver | description | default |
+|:-----|:-------|:------------|:--------|
+| class | - | the cache driver,it can be a default driver name or a driver class | undefined |
+| ttl | - | time to live(second) | 0 |
+| keep | - | when fail to get raw data, use timeout cached data | false |
+| autoRenew | - | auto renew TTL when get data from cache | false |
+| cacheUndefined | - | cache the undefined data as null when you get multiply data | false |
+| channel | memory | the redis publish/subscribe channel,need getRedis or rds | undefined |
+| channel | redis | redis prefix, auto add ':' | 'cache9' |
+| getRedis | memory | function(){ return {pub, sub}},pub and sub is redis client | undefined |
+| getRedis | redis | function(){ return rds},rds is redis client | undefined |
+| rds | - | a redis client config, use it when you don't set getRedis | undefined |
+| clearTime | memory | auto delete memory cached time(second), clearTime >= 1800s | 0 |
+| raw | redis |  when it is true we don't use JSON.stringify and JSON.parse for redis | false |
 ## Options
 cache options
 ### Default options
-    | name | description | default |
-    | :--- | :--------- | :------：|
-    | ttl | time to live | null |
-    | keep   | when fail to get raw, use cached data | false |
-    | disable | disable cache this time | false|
-    | update   | force update data | false |
-    | autoRenew | auto renew cached data | false|
-### Redis driver extend options
-    | name | description | required |
-    | :--- | :--------- | :------：|
-    | raw | when it is true we don't use JSON.stringify and JSON.parse for raw data | false |
+| name | driver | description | default |
+|:-----|:-------|:------------|:--------|
+| ttl | - | same as config | null |
+| keep | - | same as config | false |
+| autoRenew | - | same as config | false|
+| cacheUndefined | - | same as config | false |
+| getKey | - | a function get key from object in list | obj=>obj |
+| disable | - | disable cache this time | false |
+| update | - | force update cache data | false |
+| raw | redis | same as config | false |
 ## Run tests
 
 ```sh
