@@ -9,25 +9,28 @@ const drivers = { memory, redis };
 
 function init(config, errLog = console.log) {
   const cache = {};
-
   for (const key in config) {
-    const cur = config[key];
-    let driver = null;
-    if (!cur.class) throw new Error(`[cache9] invalid class in config '${key}'`);
-    if (_.isFunction(cur.class)) {
-      driver = new cur.class(cur, errLog);
-    } else if (drivers[cur.class]) {
-      driver = new drivers[cur.class](cur, errLog);
-    } else {
-      throw new Error(`[cache9] invalid class in config '${key}'`);
-    }
-    cache[key] = driver;
+    cache[key] = create(config[key], errLog, key);
   }
-
   return cache;
+}
+
+function create(config, errLog = console.log, cacheName) {
+  let driver = null;
+  const driverClass = config.class;
+  if (!driverClass) throw new Error(`[cache9] invalid class in config${cacheName ? ` '${cacheName}'` : ''}`);
+  if (_.isFunction(driverClass)) {
+    driver = new driverClass(config, errLog);
+  } else if (drivers[driverClass]) {
+    driver = new drivers[driverClass](config, errLog);
+  } else {
+    throw new Error(`[cache9] invalid class in config${cacheName ? ` '${cacheName}'` : ''}`);
+  }
+  return driver;
 }
 
 module.exports = {
   BaseDriver,
   init,
+  create,
 };
