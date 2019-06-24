@@ -167,7 +167,7 @@ Give a ⭐️ if this project helped you!
 ## License
 
 Copyright © 2019 [985ch](https://github.com/985ch).<br />
-This project is [MIT](https://github.com/985ch/node-cache-9/blob/master/LICENSE) licensed.
+This project is [MIT](https://github.com/985ch/node-cache-9/blob/master/LICENSE) licensed.<br />
 This README was translate by [google](https://translate.google.cn)
 
 ***
