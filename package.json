@@ -1,6 +1,6 @@
 {
 	"name": "node-cache-9",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "an easy-to-use caching module for clustered servers",
 	"license": "MIT",
 	"repository": "985ch/node-cache-9",
