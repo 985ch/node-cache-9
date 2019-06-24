@@ -95,7 +95,7 @@ cache.get(key, func);
 |:----|:-----|:----|
 | async get(key,func,options) | any | 从缓存获取数据或是调用func()获取数据 |
 | renew(key,options) | - | 刷新缓存的有效时间 |
-| clear(key) | - | 清除缓存 |
+| async clear(key) | - | 清除缓存 |
 | setCache(key, data, options) | - | 设置缓存数据 |
 | async getCache(key, options) | any | 从缓存获取数据 |
 ### 针对分组缓存的方法
@@ -103,7 +103,7 @@ cache.get(key, func);
 |:----|:-----|:----|
 | async getM(key,list,saveKey,func,options) | {list, json} | 批量从缓存中获取数据，缓存中没有的数据会整理出来，通过func(lst)函数获取并缓存，其中saveKey(obj)用于获取一个值对应的键 |
 | renewM(key,list,options) | - | 批量刷新缓存的有效时间 |
-| clearM(key, list, options) | - | 批量清空缓存，当若省略list参数，则清除整组缓存 |
+| async clearM(key, list, options) | - | 批量清空缓存，当若省略list参数，则清除整组缓存 |
 | setCacheM(key, subkey, data, options) | - | 设置一组缓存中的单个数据 |
 | async getCacheM(key, list, options) | {list, json} | 从缓存获取一组数据 |
 ### 内置的缓存驱动类

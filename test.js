@@ -70,7 +70,7 @@ async function runTestM(store) {
   cache[store].renewM('test', [ 1, 2, 3, 5 ]);
   console.log('renew 1,2,3,5!');
   await multiplyTest(3, store, [ 1, 2, 3, 4, 5 ]);
-  cache[store].clearM('test', [ 3, 4, 5 ]);
+  await cache[store].clearM('test', [ 3, 4, 5 ]);
   console.log('clear 3,4,5!');
   await multiplyTest(4, store, [ 1, 2, 3, 4 ]);
   await wait(1000);

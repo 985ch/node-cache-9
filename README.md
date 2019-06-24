@@ -96,7 +96,7 @@ The cache driver class is a class that contains some specific methods. We operat
 |:----|:-----|:----|
 | async get(key,func,options) | any | Get data from cache or func() method |
 | renew(key,options) | - | Update expiration time |
-| clear(key) | - | Clear cache |
+| async clear(key) | - | Clear cache |
 | setCache(key, data, options) | - | Set cache data |
 | async getCache(key, options) | any | Get data from cache |
 ### Muliply caches
@@ -104,7 +104,7 @@ The cache driver class is a class that contains some specific methods. We operat
 |:----|:-----|:----|
 | async getM(key,list,saveKey,func,options) | {list, json} | The data is obtained from the cache in batches, and the data not in the cache is sorted out, and is obtained and cached by the func(lst) function, where saveKey(obj) is used to obtain a key corresponding to a value |
 | renewM(key,list,options) | - | Update expiration time |
-| clearM(key, list, options) | - | Clear caches, parameter list can be omitted |
+| async clearM(key, list, options) | - | Clear caches, parameter list can be omitted |
 | setCacheM(key, subkey, data, options) | - | Set cache data |
 | async getCacheM(key, list, options) | {list, json} | Get data from cache |
 ### Default dirvers
