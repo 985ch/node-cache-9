@@ -1,14 +1,24 @@
-<h1 align="center">node-cache-9 </h1>
-<p>
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/node-%3E%3D8-blue.svg" />
-  <a  href="https://npmjs.org/package/node-cache-9">
-    <img src="https://img.shields.io/npm/v/node-cache-9.svg?style=flat-square" />
-  </a>
-  <a href="https://github.com/985ch/node-cache-9/blob/master/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
-  </a>
-</p>
+# node-cache-9
+
+![node version][node-image]
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][codecov-image]][codecov-url]
+[![David deps][david-image]][david-url]
+[![npm download][download-image]][download-url]
+
+[node-image]: https://img.shields.io/badge/node-%3E%3D8-blue.svg
+[npm-image]: https://img.shields.io/npm/v/node-cache-9.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/node-cache-9
+[travis-image]: https://img.shields.io/travis/985ch/node-cache-9.svg?style=flat-square
+[travis-url]: https://travis-ci.org/985ch/node-cache-9
+[codecov-image]: https://img.shields.io/codecov/c/github/985ch/node-cache-9.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/985ch/node-cache-9?branch=master
+[david-image]: https://img.shields.io/david/985ch/node-cache-9.svg?style=flat-square
+[david-url]: https://david-dm.org/985ch/node-cache-9
+[download-image]: https://img.shields.io/npm/dm/node-cache-9.svg?style=flat-square
+[download-url]: https://npmjs.org/package/node-cache-9
+
 > 这是一个简单易用的数据缓存模块，利用该模块任何人都可以简单的把数据放入缓存而不需要去处理相关逻辑
 
 ###  [主页](https://github.com/985ch/node-cache-9#readme)

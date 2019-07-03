@@ -1,6 +1,6 @@
 {
 	"name": "node-cache-9",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"description": "an easy-to-use caching module for clustered servers",
 	"license": "MIT",
 	"repository": "985ch/node-cache-9",
@@ -8,7 +8,10 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"test": "node test"
+		"test": "npm run lint -- --fix && npm run test-local",
+		"test-local": "mocha test",
+		"cov": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+		"lint": "eslint ."
 	},
 	"files": [
 		"lib",
@@ -27,6 +30,8 @@
 	},
 	"devDependencies": {
 		"eslint": "^5.16.0",
-		"eslint-config-egg": "^7.4.1"
+		"eslint-config-egg": "^7.4.1",
+		"istanbul": "^1.1.0-alpha.1",
+		"mocha": "^6.1.4"
 	}
 }

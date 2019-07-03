@@ -49,7 +49,6 @@ const wait = promisify((n, callback) => {
 });
 
 async function runTest(store) {
-  console.log(`start ${store} single est`);
   await singleTest(1, store, '1st');
   await singleTest(2, store, '2nd with update', { update: true });
   cache[store].renew('test');
@@ -60,11 +59,9 @@ async function runTest(store) {
   await singleTest(4, store, '4th');
   await wait(1000);
   await singleTest(5, store, '5th');
-  console.log(`complete ${store} single test\n`);
 }
 
 async function runTestM(store) {
-  console.log(`start ${store} multiply test`);
   await multiplyTest(1, store, [ 1, 3, 5 ]);
   await multiplyTest(2, store, [ 1, 2 ], { update: true });
   cache[store].renewM('test', [ 1, 2, 3, 5 ]);
@@ -75,14 +72,25 @@ async function runTestM(store) {
   await multiplyTest(4, store, [ 1, 2, 3, 4 ]);
   await wait(1000);
   await multiplyTest(5, store, [ 1, 2, 3, 4, 5 ]);
-  console.log(`complete ${store} multiply test\n`);
 }
 
-(async () => {
-  await runTest('memory');
-  await runTest('redis');
-  await runTestM('memory');
-  await runTestM('redis');
-  cache.memory.destroy();
-  cache.redis.destroy();
-})();
+describe('Array', function() {
+  it('memory single', async function() {
+    this.timeout(3000);
+    await runTest('memory');
+  });
+  it('redis single', async function() {
+    this.timeout(3000);
+    await runTest('redis');
+  });
+  it('memory multiply', async function() {
+    this.timeout(3000);
+    await runTestM('memory');
+  });
+  it('redis multiply', async function() {
+    this.timeout(3000);
+    await runTestM('redis');
+    cache.memory.destroy();
+    cache.redis.destroy();
+  });
+});
