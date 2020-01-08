@@ -25,7 +25,7 @@
 	"homepage": "https://github.com/985ch/node-cache-9#readme",
 	"author": "985ch",
 	"dependencies": {
-		"lodash": "^4.17.11",
+		"lodash": "^4.17.15",
 		"redis": "^2.8.0"
 	},
 	"devDependencies": {
